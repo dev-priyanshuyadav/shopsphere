@@ -2,20 +2,25 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import { SkipToContent } from "../components/layout/SkipToContent";
 import { ScrollToTop } from "./ScrollToTop";
+import { Navbar } from "../components/layout/Navbar";
+import { Footer } from "../components/layout/Footer";
 
 export interface RootLayoutProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
-export const RootLayout: React.FC<RootLayoutProps> = ({ header, footer }) => {
+export const RootLayout: React.FC<RootLayoutProps> = ({
+  header = <Navbar />,
+  footer = <Footer />,
+}) => {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 selection:bg-primary-500 selection:text-white">
       <SkipToContent targetId="main-content" />
       <ScrollToTop />
 
       {/* Header Container */}
-      {header && <header className="sticky top-0 z-40 w-full">{header}</header>}
+      {header}
 
       {/* Main Content Area */}
       <main
@@ -27,7 +32,7 @@ export const RootLayout: React.FC<RootLayoutProps> = ({ header, footer }) => {
       </main>
 
       {/* Footer Container */}
-      {footer && <footer className="w-full mt-auto">{footer}</footer>}
+      {footer}
     </div>
   );
 };
