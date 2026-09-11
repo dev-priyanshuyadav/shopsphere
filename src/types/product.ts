@@ -12,6 +12,7 @@ export interface Product {
   brand: string;
   tags?: string[];
   featured?: boolean;
+  createdAt?: string;
 }
 
 export type ProductCategory =
@@ -20,3 +21,35 @@ export type ProductCategory =
   | "accessories"
   | "home"
   | "beauty";
+
+export type ProductSortOption =
+  | "featured"
+  | "price-asc"
+  | "price-desc"
+  | "rating"
+  | "newest";
+
+export interface ProductQueryParams {
+  category?: string;
+  search?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  rating?: number;
+  sortBy?: ProductSortOption;
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface CategoryInfo {
+  id: string;
+  name: string;
+  count: number;
+}
