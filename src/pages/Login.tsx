@@ -1,9 +1,45 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogIn } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../components/common/Button";
+import { Input } from "../components/common/Input";
+import { useAuthStore } from "../store/authStore";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
+});
+
+type LoginFormValues = z.infer<typeof loginSchema>;
 
 export const Login: React.FC = () => {
+  const navigate = useNavigate();
+  const login = useAuthStore((state) => state.login);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "demo@shopsphere.dev", password: "password123" },
+  });
+
+  const onSubmit = (values: LoginFormValues) => {
+    login({
+      id: "demo-user",
+      name: "Demo Customer",
+      email: values.email,
+      role: "customer",
+    });
+    navigate("/profile");
+  };
+
   return (
     <div className="max-w-md mx-auto px-4 py-16 w-full">
       <div className="bg-white rounded-2xl border border-slate-200/80 p-8 shadow-xs">
@@ -19,12 +55,43 @@ export const Login: React.FC = () => {
           </p>
         </div>
 
-        <div className="text-center py-4">
-          <p className="text-sm text-slate-500 mb-4">
-            React Hook Form + Zod form validation in Phase 13.
-          </p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          noValidate
+        >
+          <Input
+            label="Email address"
+            type="email"
+            autoComplete="email"
+            placeholder="you@example.com"
+            {...register("email")}
+            error={errors.email?.message}
+          />
+
+          <Input
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="Enter your password"
+            {...register("password")}
+            error={errors.password?.message}
+          />
+
+          <Button
+            type="submit"
+            fullWidth
+            isLoading={isSubmitting}
+            loadingText="Signing in"
+          >
+            Sign in
+          </Button>
+        </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-slate-500 mb-4">Need an account?</p>
           <Link to="/register">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" fullWidth>
               Create an Account
             </Button>
           </Link>

@@ -58,6 +58,14 @@ describe("productService", () => {
     }
   });
 
+  it("includes the expanded catalog of sample products", async () => {
+    const result = await productService.getProducts({
+      search: "summit alpine",
+    });
+    expect(result.data.length).toBeGreaterThan(0);
+    expect(result.data[0].title).toMatch(/summit alpine/i);
+  });
+
   it("retrieves single product by ID", async () => {
     const product = await productService.getProductById("prod-1");
     expect(product.id).toBe("prod-1");

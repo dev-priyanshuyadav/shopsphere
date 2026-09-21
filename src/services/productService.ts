@@ -311,7 +311,597 @@ export const INITIAL_PRODUCTS: Product[] = [
     tags: ["perfume", "fragrance", "beauty"],
     createdAt: "2026-02-18T10:00:00Z",
   },
+  ...createAdditionalProducts(),
 ];
+
+function createAdditionalProducts(): Product[] {
+  const collections: Array<{
+    category: string;
+    brand: string;
+    image: string;
+    products: Array<{ title: string; price: number; tags: string[] }>;
+  }> = [
+    {
+      category: "electronics",
+      brand: "Northstar Labs",
+      image:
+        "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=80",
+      products: [
+        {
+          title: "Vertex Ultrabook 14-inch Laptop",
+          price: 899,
+          tags: ["laptop", "work", "portable"],
+        },
+        {
+          title: "Orbit USB-C 4K Monitor",
+          price: 329,
+          tags: ["monitor", "office", "4k"],
+        },
+        {
+          title: "EchoBeam Compact Bluetooth Speaker",
+          price: 89,
+          tags: ["speaker", "audio", "bluetooth"],
+        },
+        {
+          title: "Nova 2TB Portable SSD",
+          price: 159,
+          tags: ["storage", "ssd", "usb-c"],
+        },
+        {
+          title: "ArcView 1080p Streaming Webcam",
+          price: 74,
+          tags: ["webcam", "streaming", "video"],
+        },
+        {
+          title: "SignalPro Wi-Fi 6 Mesh Router",
+          price: 189,
+          tags: ["wifi", "network", "router"],
+        },
+        {
+          title: "Flux 65W GaN Travel Charger",
+          price: 49,
+          tags: ["charger", "travel", "usb-c"],
+        },
+        {
+          title: "AeroFit Open-Ear Sport Earbuds",
+          price: 129,
+          tags: ["earbuds", "sport", "wireless"],
+        },
+        {
+          title: "PixelNote E-Ink Writing Tablet",
+          price: 219,
+          tags: ["tablet", "writing", "digital"],
+        },
+        {
+          title: "Gridline Wireless Charging Stand",
+          price: 59,
+          tags: ["charging", "desk", "wireless"],
+        },
+        {
+          title: "Halo Mini Smart Home Hub",
+          price: 99,
+          tags: ["smart-home", "hub", "voice"],
+        },
+        {
+          title: "FocusLite Portable LED Projector",
+          price: 279,
+          tags: ["projector", "movie", "portable"],
+        },
+        {
+          title: "Vector Ergonomic Vertical Mouse",
+          price: 69,
+          tags: ["mouse", "ergonomic", "office"],
+        },
+        {
+          title: "StudioCast USB Condenser Microphone",
+          price: 119,
+          tags: ["microphone", "audio", "creator"],
+        },
+        {
+          title: "Tempo Digital Piano Controller",
+          price: 249,
+          tags: ["keyboard", "music", "midi"],
+        },
+        {
+          title: "Glide Pro Fitness Tracker Band",
+          price: 79,
+          tags: ["fitness", "wearable", "health"],
+        },
+        {
+          title: "ClearCall Noise-Isolating Headset",
+          price: 109,
+          tags: ["headset", "calls", "audio"],
+        },
+        {
+          title: "Ridge Action Camera 5K Kit",
+          price: 299,
+          tags: ["camera", "action", "travel"],
+        },
+        {
+          title: "LinkPad Multi-Device Bluetooth Trackpad",
+          price: 139,
+          tags: ["trackpad", "bluetooth", "desk"],
+        },
+        {
+          title: "Solaris Smart Ambient Light Bar",
+          price: 84,
+          tags: ["lighting", "smart-home", "desk"],
+        },
+      ],
+    },
+    {
+      category: "clothing",
+      brand: "Field & Form",
+      image:
+        "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=80",
+      products: [
+        {
+          title: "Everyday Pima Cotton Crewneck",
+          price: 42,
+          tags: ["t-shirt", "cotton", "basics"],
+        },
+        {
+          title: "Relaxed Linen Camp Collar Shirt",
+          price: 68,
+          tags: ["shirt", "linen", "summer"],
+        },
+        {
+          title: "Merino Ribbed Mock Neck Sweater",
+          price: 98,
+          tags: ["sweater", "merino", "winter"],
+        },
+        {
+          title: "Utility Canvas Chore Jacket",
+          price: 118,
+          tags: ["jacket", "canvas", "utility"],
+        },
+        {
+          title: "Everyday Stretch Oxford Shirt",
+          price: 72,
+          tags: ["shirt", "office", "cotton"],
+        },
+        {
+          title: "Brushed Cotton Flannel Overshirt",
+          price: 84,
+          tags: ["flannel", "shirt", "layering"],
+        },
+        {
+          title: "Recycled Nylon Packable Windbreaker",
+          price: 105,
+          tags: ["jacket", "outdoor", "windbreaker"],
+        },
+        {
+          title: "Tapered Performance Chino",
+          price: 79,
+          tags: ["pants", "chino", "stretch"],
+        },
+        {
+          title: "Pleated Wide-Leg Tailored Trousers",
+          price: 112,
+          tags: ["pants", "tailored", "fashion"],
+        },
+        {
+          title: "Organic Relaxed Fit Sweatpants",
+          price: 64,
+          tags: ["sweatpants", "organic", "lounge"],
+        },
+        {
+          title: "Lightweight Merino Travel Polo",
+          price: 88,
+          tags: ["polo", "travel", "merino"],
+        },
+        {
+          title: "Ribbed Cotton Everyday Tank",
+          price: 29,
+          tags: ["tank", "cotton", "basics"],
+        },
+        {
+          title: "Water-Repellent Quilted Vest",
+          price: 96,
+          tags: ["vest", "outdoor", "layering"],
+        },
+        {
+          title: "Soft Brushed Lounge Cardigan",
+          price: 91,
+          tags: ["cardigan", "lounge", "knit"],
+        },
+        {
+          title: "Classic Oxford Button-Down",
+          price: 76,
+          tags: ["shirt", "oxford", "office"],
+        },
+        {
+          title: "Canvas Low-Top Everyday Trainers",
+          price: 82,
+          tags: ["shoes", "canvas", "sneakers"],
+        },
+        {
+          title: "Technical Knit Running Shorts",
+          price: 49,
+          tags: ["shorts", "running", "sport"],
+        },
+        {
+          title: "Heavyweight French Terry Joggers",
+          price: 74,
+          tags: ["joggers", "cotton", "casual"],
+        },
+        {
+          title: "Fine Gauge Cotton Crew Sweater",
+          price: 86,
+          tags: ["sweater", "cotton", "knit"],
+        },
+        {
+          title: "Waterproof City Rain Shell",
+          price: 149,
+          tags: ["jacket", "rain", "outdoor"],
+        },
+      ],
+    },
+    {
+      category: "accessories",
+      brand: "Common Ground",
+      image:
+        "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+      products: [
+        {
+          title: "Waxed Canvas Weekender Duffel",
+          price: 145,
+          tags: ["bag", "travel", "canvas"],
+        },
+        {
+          title: "Slim Aluminum Card Holder",
+          price: 39,
+          tags: ["wallet", "aluminum", "minimal"],
+        },
+        {
+          title: "Braided Leather Casual Belt",
+          price: 54,
+          tags: ["belt", "leather", "accessory"],
+        },
+        {
+          title: "Merino Ribbed Everyday Beanie",
+          price: 32,
+          tags: ["beanie", "winter", "merino"],
+        },
+        {
+          title: "Silk Blend Pocket Square Set",
+          price: 44,
+          tags: ["silk", "formal", "gift"],
+        },
+        {
+          title: "Recycled Nylon Crossbody Sling",
+          price: 68,
+          tags: ["bag", "crossbody", "travel"],
+        },
+        {
+          title: "Hand-Finished Acetate Round Sunglasses",
+          price: 110,
+          tags: ["sunglasses", "eyewear", "acetate"],
+        },
+        {
+          title: "Compact RFID Travel Passport Wallet",
+          price: 58,
+          tags: ["travel", "passport", "rfid"],
+        },
+        {
+          title: "Brushed Steel Minimalist Watch",
+          price: 129,
+          tags: ["watch", "steel", "minimal"],
+        },
+        {
+          title: "Cashmere Blend Winter Scarf",
+          price: 88,
+          tags: ["scarf", "cashmere", "winter"],
+        },
+        {
+          title: "Foldable Market Tote Bag",
+          price: 26,
+          tags: ["tote", "reusable", "shopping"],
+        },
+        {
+          title: "Leather Cable Organizer Roll",
+          price: 35,
+          tags: ["organizer", "travel", "leather"],
+        },
+        {
+          title: "Classic Cotton Baseball Cap",
+          price: 31,
+          tags: ["cap", "cotton", "casual"],
+        },
+        {
+          title: "Polar Fleece Touchscreen Gloves",
+          price: 28,
+          tags: ["gloves", "winter", "touchscreen"],
+        },
+        {
+          title: "Minimal Brass Key Organizer",
+          price: 41,
+          tags: ["keys", "brass", "organizer"],
+        },
+        {
+          title: "Geometric Acetate Hair Claw Set",
+          price: 24,
+          tags: ["hair", "accessory", "acetate"],
+        },
+        {
+          title: "Travel Compression Packing Cubes",
+          price: 52,
+          tags: ["travel", "packing", "organizer"],
+        },
+        {
+          title: "Everyday Merino Crew Socks",
+          price: 22,
+          tags: ["socks", "merino", "basics"],
+        },
+        {
+          title: "Slim Reversible Leather Belt",
+          price: 62,
+          tags: ["belt", "leather", "reversible"],
+        },
+        {
+          title: "Alpine Insulated Water Bottle",
+          price: 38,
+          tags: ["bottle", "outdoor", "insulated"],
+        },
+        {
+          title: "Summit Alpine Trail Daypack",
+          price: 138,
+          tags: ["backpack", "hiking", "travel"],
+        },
+        {
+          title: "Summit Alpine Thermal Flask",
+          price: 46,
+          tags: ["flask", "outdoor", "hydration"],
+        },
+        {
+          title: "Summit Alpine Trekking Gloves",
+          price: 34,
+          tags: ["gloves", "hiking", "winter"],
+        },
+      ],
+    },
+    {
+      category: "home",
+      brand: "Hearthline",
+      image:
+        "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80",
+      products: [
+        {
+          title: "Handwoven Textured Throw Blanket",
+          price: 79,
+          tags: ["blanket", "textile", "decor"],
+        },
+        {
+          title: "Oak Floating Wall Shelf",
+          price: 58,
+          tags: ["shelf", "wood", "storage"],
+        },
+        {
+          title: "Linen Table Runner Natural Weave",
+          price: 34,
+          tags: ["linen", "table", "decor"],
+        },
+        {
+          title: "Stackable Glass Food Storage Set",
+          price: 46,
+          tags: ["kitchen", "storage", "glass"],
+        },
+        {
+          title: "Sculptural Ribbed Ceramic Vase",
+          price: 48,
+          tags: ["vase", "ceramic", "decor"],
+        },
+        {
+          title: "Acacia Wood Serving Board",
+          price: 39,
+          tags: ["kitchen", "wood", "serving"],
+        },
+        {
+          title: "Low-Profile Wool Blend Area Rug",
+          price: 189,
+          tags: ["rug", "wool", "home"],
+        },
+        {
+          title: "Scented Soy Candle Cedar Studio",
+          price: 28,
+          tags: ["candle", "scent", "decor"],
+        },
+        {
+          title: "Soft Cotton Waffle Bath Towel Set",
+          price: 62,
+          tags: ["bath", "cotton", "towel"],
+        },
+        {
+          title: "Matte Stoneware Dinner Plate Set",
+          price: 74,
+          tags: ["dining", "ceramic", "kitchen"],
+        },
+        {
+          title: "Bamboo Drawer Organizer System",
+          price: 43,
+          tags: ["storage", "bamboo", "organizer"],
+        },
+        {
+          title: "Linen Blend Blackout Curtain Pair",
+          price: 96,
+          tags: ["curtain", "linen", "window"],
+        },
+        {
+          title: "Portable Ceramic Space Heater",
+          price: 119,
+          tags: ["heater", "home", "portable"],
+        },
+        {
+          title: "Cast Iron Enamel Dutch Oven",
+          price: 138,
+          tags: ["cookware", "kitchen", "cast-iron"],
+        },
+        {
+          title: "Hand-Poured Amber Glass Diffuser",
+          price: 36,
+          tags: ["diffuser", "scent", "home"],
+        },
+        {
+          title: "Adjustable Walnut Laptop Stand",
+          price: 69,
+          tags: ["desk", "wood", "office"],
+        },
+        {
+          title: "Cloud Cotton Percale Sheet Set",
+          price: 109,
+          tags: ["bedding", "cotton", "bedroom"],
+        },
+        {
+          title: "Stoneware Pour-Over Coffee Dripper",
+          price: 32,
+          tags: ["coffee", "ceramic", "kitchen"],
+        },
+        {
+          title: "Brass Arc Floor Reading Lamp",
+          price: 175,
+          tags: ["lighting", "lamp", "living-room"],
+        },
+        {
+          title: "Modular Felt Storage Basket Set",
+          price: 57,
+          tags: ["storage", "felt", "organizer"],
+        },
+      ],
+    },
+    {
+      category: "beauty",
+      brand: "Verde Ritual",
+      image:
+        "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=800&q=80",
+      products: [
+        {
+          title: "Daily Mineral SPF 40 Face Lotion",
+          price: 32,
+          tags: ["skincare", "spf", "face"],
+        },
+        {
+          title: "Gentle Cloud Foaming Cleanser",
+          price: 24,
+          tags: ["cleanser", "skincare", "gentle"],
+        },
+        {
+          title: "Overnight Renewal Bakuchiol Cream",
+          price: 54,
+          tags: ["cream", "skincare", "night"],
+        },
+        {
+          title: "Nourishing Botanical Body Oil",
+          price: 38,
+          tags: ["body", "oil", "botanical"],
+        },
+        {
+          title: "Rosewater Balancing Face Mist",
+          price: 22,
+          tags: ["mist", "skincare", "rose"],
+        },
+        {
+          title: "Mineral Clay Detox Mask",
+          price: 29,
+          tags: ["mask", "skincare", "clay"],
+        },
+        {
+          title: "Silk Finish Tinted Moisturizer",
+          price: 41,
+          tags: ["makeup", "face", "tinted"],
+        },
+        {
+          title: "Cream Blush Duo Warm Petal",
+          price: 27,
+          tags: ["makeup", "blush", "color"],
+        },
+        {
+          title: "Soft Definition Brow Pencil",
+          price: 19,
+          tags: ["makeup", "brows", "beauty"],
+        },
+        {
+          title: "Nourishing Clear Lip Balm",
+          price: 14,
+          tags: ["lip", "balm", "beauty"],
+        },
+        {
+          title: "Volumizing Botanical Shampoo",
+          price: 31,
+          tags: ["hair", "shampoo", "botanical"],
+        },
+        {
+          title: "Repairing Argan Hair Mask",
+          price: 36,
+          tags: ["hair", "mask", "argan"],
+        },
+        {
+          title: "Daily Hydration Hand Cream",
+          price: 18,
+          tags: ["hands", "cream", "hydration"],
+        },
+        {
+          title: "Citrus Neroli Eau De Toilette",
+          price: 72,
+          tags: ["fragrance", "citrus", "beauty"],
+        },
+        {
+          title: "Smoked Vanilla Home Fragrance Oil",
+          price: 26,
+          tags: ["fragrance", "vanilla", "home"],
+        },
+        {
+          title: "Cooling Green Tea Eye Gel",
+          price: 34,
+          tags: ["eyes", "skincare", "cooling"],
+        },
+        {
+          title: "Rose Quartz Facial Massage Tool",
+          price: 25,
+          tags: ["facial", "massage", "skincare"],
+        },
+        {
+          title: "Soft Bamboo Makeup Brush Set",
+          price: 44,
+          tags: ["makeup", "brushes", "bamboo"],
+        },
+        {
+          title: "Calm Lavender Bath Soak",
+          price: 28,
+          tags: ["bath", "lavender", "relaxation"],
+        },
+        {
+          title: "Clarifying Scalp Care Serum",
+          price: 39,
+          tags: ["hair", "scalp", "serum"],
+        },
+      ],
+    },
+  ];
+
+  return collections.flatMap((collection, collectionIndex) =>
+    collection.products.map((product, productIndex) => ({
+      id: `prod-${17 + collectionIndex * 20 + productIndex}`,
+      title: product.title,
+      description: `Thoughtfully designed ${product.title.toLowerCase()} made for everyday use, with dependable materials and a considered finish.`,
+      price: product.price,
+      originalPrice:
+        productIndex % 4 === 0 ? Math.round(product.price * 1.18) : undefined,
+      category: collection.category,
+      images: [collection.image],
+      rating: Number(
+        (4.2 + ((productIndex + collectionIndex) % 8) * 0.1).toFixed(1),
+      ),
+      reviewCount: 24 + collectionIndex * 31 + productIndex * 13,
+      stock: 8 + ((productIndex * 7 + collectionIndex * 5) % 48),
+      brand: collection.brand,
+      tags: product.tags,
+      featured: productIndex < 2,
+      createdAt: `2026-${String(3 + (productIndex % 7)).padStart(2, "0")}-${String(
+        1 + productIndex,
+      ).padStart(2, "0")}T10:00:00Z`,
+    })),
+  );
+}
 
 // Helper to access persistent store
 const getStoredProducts = (): Product[] => {

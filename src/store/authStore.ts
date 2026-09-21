@@ -6,6 +6,7 @@ interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
   login: (user: User) => void;
+  register: (input: { name: string; email: string; password?: string }) => User;
   logout: () => void;
 }
 
@@ -17,6 +18,18 @@ export const useAuthStore = create<AuthState>()(
 
       login: (user: User) => {
         set({ user, isAuthenticated: true });
+      },
+
+      register: ({ name, email }) => {
+        const newUser: User = {
+          id: `user-${Date.now()}`,
+          name,
+          email,
+          role: "customer",
+        };
+
+        set({ user: newUser, isAuthenticated: true });
+        return newUser;
       },
 
       logout: () => {
