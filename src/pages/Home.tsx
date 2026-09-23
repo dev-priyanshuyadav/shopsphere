@@ -99,8 +99,7 @@ export const Home: React.FC = () => {
               <Link to="/shop?category=electronics">
                 <Button
                   size="lg"
-                  variant="outline"
-                  className="text-white bg-slate-800/80 border-slate-700 hover:bg-slate-800"
+                  rightIcon={<ArrowRight className="w-4 h-4" />}
                 >
                   Shop Electronics
                 </Button>
