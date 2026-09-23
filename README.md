@@ -6,7 +6,7 @@ ShopSphere is a modern e-commerce storefront built with React, TypeScript, Vite,
 
 ## Live Demo
 
-[Open the ShopSphere demo on Netlify](https://shopsphere.netlify.app)
+[Open the ShopSphere demo on Netlify](https://demo-shopshere.netlify.app/))
 
 If the Netlify site uses a different name, replace the link above with the deployed site URL.
 
