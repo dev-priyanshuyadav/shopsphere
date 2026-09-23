@@ -66,6 +66,30 @@ describe("productService", () => {
     expect(result.data[0].title).toMatch(/summit alpine/i);
   });
 
+  it("keeps at least 100 products and removes products without images", async () => {
+    localStorage.setItem(
+      "shopsphere_products_db",
+      JSON.stringify([
+        ...INITIAL_PRODUCTS,
+        {
+          ...INITIAL_PRODUCTS[0],
+          id: "image-less-product",
+          images: [],
+        },
+      ]),
+    );
+
+    const result = await productService.getProducts({ limit: 200 });
+
+    expect(result.total).toBeGreaterThanOrEqual(100);
+    expect(
+      result.data.some((product) => product.id === "image-less-product"),
+    ).toBe(false);
+    expect(result.data.every((product) => product.images.some(Boolean))).toBe(
+      true,
+    );
+  });
+
   it("retrieves single product by ID", async () => {
     const product = await productService.getProductById("prod-1");
     expect(product.id).toBe("prod-1");

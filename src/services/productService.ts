@@ -911,7 +911,16 @@ const getStoredProducts = (): Product[] => {
       localStorage.setItem(DB_KEY, JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;
     }
-    return JSON.parse(data) as Product[];
+    const products = JSON.parse(data) as Product[];
+    const productsWithImages = products.filter((product) =>
+      product.images?.some((image) => image.trim().length > 0),
+    );
+
+    if (productsWithImages.length !== products.length) {
+      saveStoredProducts(productsWithImages);
+    }
+
+    return productsWithImages;
   } catch {
     return INITIAL_PRODUCTS;
   }
