@@ -90,6 +90,18 @@ describe("productService", () => {
     );
   });
 
+  it("refreshes an older local catalog with the expanded seed", async () => {
+    localStorage.removeItem("shopsphere_products_db_version");
+    localStorage.setItem(
+      "shopsphere_products_db",
+      JSON.stringify(INITIAL_PRODUCTS.slice(0, 16)),
+    );
+
+    const result = await productService.getProducts({ limit: 200 });
+
+    expect(result.total).toBe(INITIAL_PRODUCTS.length);
+  });
+
   it("retrieves single product by ID", async () => {
     const product = await productService.getProductById("prod-1");
     expect(product.id).toBe("prod-1");

@@ -7,6 +7,8 @@ import {
 import { ApiError, delay } from "./api";
 
 const DB_KEY = "shopsphere_products_db";
+const DB_VERSION_KEY = "shopsphere_products_db_version";
+const DB_VERSION = "2";
 
 export const INITIAL_PRODUCTS: Product[] = [
   // Electronics
@@ -906,6 +908,11 @@ function createAdditionalProducts(): Product[] {
 // Helper to access persistent store
 const getStoredProducts = (): Product[] => {
   try {
+    if (localStorage.getItem(DB_VERSION_KEY) !== DB_VERSION) {
+      saveStoredProducts(INITIAL_PRODUCTS);
+      return INITIAL_PRODUCTS;
+    }
+
     const data = localStorage.getItem(DB_KEY);
     if (!data) {
       localStorage.setItem(DB_KEY, JSON.stringify(INITIAL_PRODUCTS));
@@ -929,6 +936,7 @@ const getStoredProducts = (): Product[] => {
 const saveStoredProducts = (products: Product[]): void => {
   try {
     localStorage.setItem(DB_KEY, JSON.stringify(products));
+    localStorage.setItem(DB_VERSION_KEY, DB_VERSION);
   } catch (error) {
     console.error("Failed to persist products to localStorage", error);
   }
