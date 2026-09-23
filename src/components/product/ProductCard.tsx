@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Heart, ShoppingBag, Star, Check } from 'lucide-react';
-import { Product } from '../../types/product';
-import { formatCurrency, calculateDiscountPercentage } from '../../utils/currency';
-import { useCartStore } from '../../store/cartStore';
-import { useWishlistStore } from '../../store/wishlistStore';
-import { Badge } from '../common/Badge';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Heart, ShoppingBag, Star, Check } from "lucide-react";
+import { Product } from "../../types/product";
+import {
+  formatCurrency,
+  calculateDiscountPercentage,
+} from "../../utils/currency";
+import { useCartStore } from "../../store/cartStore";
+import { useWishlistStore } from "../../store/wishlistStore";
+import { Badge } from "../common/Badge";
 
 export interface ProductCardProps {
   product: Product;
   className?: string;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '' }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  className = "",
+}) => {
   const [isAdded, setIsAdded] = useState(false);
   const addItemToCart = useCartStore((state) => state.addItem);
   const { toggleWishlist, isWishlisted } = useWishlistStore();
 
   const wishlisted = isWishlisted(product.id);
-  const discount = calculateDiscountPercentage(product.price, product.originalPrice);
+  const discount = calculateDiscountPercentage(
+    product.price,
+    product.originalPrice,
+  );
   const isOutOfStock = product.stock <= 0;
 
   const handleAddToCart = (e: React.MouseEvent) => {
@@ -51,7 +60,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '
         className="relative aspect-square w-full overflow-hidden bg-slate-100 block focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
       >
         <img
-          src={product.images[0] || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800'}
+          src={
+            product.images[0] ||
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800"
+          }
           alt={product.title}
           loading="lazy"
           className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
@@ -80,18 +92,22 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '
         <button
           type="button"
           onClick={handleToggleWishlist}
-          aria-label={wishlisted ? `Remove ${product.title} from wishlist` : `Add ${product.title} to wishlist`}
+          aria-label={
+            wishlisted
+              ? `Remove ${product.title} from wishlist`
+              : `Add ${product.title} to wishlist`
+          }
           className={`
             absolute top-3 right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center
             transition-all duration-150 shadow-xs focus-visible:ring-2 focus-visible:ring-primary-500
             ${
               wishlisted
-                ? 'bg-rose-50 text-rose-500'
-                : 'bg-white/90 text-slate-400 hover:text-rose-500 hover:bg-white backdrop-blur-xs'
+                ? "bg-rose-50 text-rose-500"
+                : "bg-white/90 text-slate-400 hover:text-rose-500 hover:bg-white backdrop-blur-xs"
             }
           `}
         >
-          <Heart className={`w-4 h-4 ${wishlisted ? 'fill-rose-500' : ''}`} />
+          <Heart className={`w-4 h-4 ${wishlisted ? "fill-rose-500" : ""}`} />
         </button>
       </Link>
 
@@ -116,7 +132,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '
         <div className="flex items-center gap-1.5 mt-2 text-xs">
           <div className="flex items-center text-amber-400">
             <Star className="w-3.5 h-3.5 fill-amber-400" />
-            <span className="ml-1 font-bold text-slate-800">{product.rating.toFixed(1)}</span>
+            <span className="ml-1 font-bold text-slate-800">
+              {product.rating.toFixed(1)}
+            </span>
           </div>
           <span className="text-slate-400">({product.reviewCount})</span>
         </div>
@@ -146,10 +164,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className = '
               transition-all duration-150 shadow-xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500
               ${
                 isOutOfStock
-                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  ? "bg-slate-100 text-slate-400 cursor-not-allowed"
                   : isAdded
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-slate-900 text-white hover:bg-primary-600 active:bg-primary-700'
+                    ? "bg-emerald-600 text-white"
+                    : "bg-slate-900 text-white hover:bg-primary-600 active:bg-primary-700"
               }
             `}
           >

@@ -5,6 +5,13 @@ export type OrderStatus =
   | "Delivered"
   | "Cancelled";
 
+export type PaymentMethod = "card" | "paypal" | "cash_on_delivery";
+
+export interface PaymentDetails {
+  method: PaymentMethod;
+  cardLast4?: string;
+}
+
 export interface ShippingAddress {
   fullName: string;
   address: string;
@@ -34,4 +41,5 @@ export interface Order {
   status: OrderStatus;
   createdAt: string;
   shippingAddress: ShippingAddress;
+  payment: PaymentDetails;
 }

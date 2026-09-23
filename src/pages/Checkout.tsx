@@ -1,6 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { ShieldCheck, ArrowLeft } from "lucide-react";
+import {
+  ShieldCheck,
+  ArrowLeft,
+  CreditCard,
+  Banknote,
+  Wallet,
+} from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,20 +16,59 @@ import { useCartStore } from "../store/cartStore";
 import { useAuthStore } from "../store/authStore";
 import { useOrderStore } from "../store/orderStore";
 import { formatCurrency } from "../utils/currency";
+import { PaymentMethod } from "../types/order";
 
-const checkoutSchema = z.object({
-  email: z
-    .string()
-    .min(1, "Email is required")
-    .email("Enter a valid email address"),
-  phone: z.string().min(7, "Phone number is required"),
-  fullName: z.string().min(1, "Full name is required"),
-  address: z.string().min(1, "Address is required"),
-  city: z.string().min(1, "City is required"),
-  state: z.string().min(1, "State is required"),
-  postalCode: z.string().min(1, "Postal code is required"),
-  country: z.string().min(1, "Country is required"),
-});
+const checkoutSchema = z
+  .object({
+    email: z
+      .string()
+      .min(1, "Email is required")
+      .email("Enter a valid email address"),
+    phone: z.string().min(7, "Phone number is required"),
+    fullName: z.string().min(1, "Full name is required"),
+    address: z.string().min(1, "Address is required"),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    postalCode: z.string().min(1, "Postal code is required"),
+    country: z.string().min(1, "Country is required"),
+    paymentMethod: z.enum(["card", "paypal", "cash_on_delivery"]),
+    cardholderName: z.string().optional(),
+    cardNumber: z.string().optional(),
+    expiry: z.string().optional(),
+    cvv: z.string().optional(),
+  })
+  .superRefine((values, context) => {
+    if (values.paymentMethod !== "card") return;
+
+    if (!values.cardholderName?.trim()) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["cardholderName"],
+        message: "Cardholder name is required",
+      });
+    }
+    if (!/^\d{16}$/.test(values.cardNumber?.replace(/\s/g, "") ?? "")) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["cardNumber"],
+        message: "Enter a valid 16-digit card number",
+      });
+    }
+    if (!/^\d{2}\/\d{2}$/.test(values.expiry ?? "")) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["expiry"],
+        message: "Use MM/YY",
+      });
+    }
+    if (!/^\d{3,4}$/.test(values.cvv ?? "")) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["cvv"],
+        message: "Enter a valid security code",
+      });
+    }
+  });
 
 type CheckoutFormValues = z.infer<typeof checkoutSchema>;
 
@@ -50,18 +95,26 @@ export const Checkout: React.FC = () => {
       state: "CA",
       postalCode: "94105",
       country: "United States",
+      paymentMethod: "card" as PaymentMethod,
+      cardholderName: user?.name ?? "Demo Customer",
+      cardNumber: "4242 4242 4242 4242",
+      expiry: "12/30",
+      cvv: "123",
     }),
     [user],
   );
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<CheckoutFormValues>({
     resolver: zodResolver(checkoutSchema),
     defaultValues,
   });
+
+  const selectedPaymentMethod = watch("paymentMethod");
 
   const onSubmit = (values: CheckoutFormValues) => {
     const order = placeOrder({
@@ -81,6 +134,12 @@ export const Checkout: React.FC = () => {
         state: values.state,
         postalCode: values.postalCode,
         country: values.country,
+      },
+      payment: {
+        method: values.paymentMethod,
+        ...(values.paymentMethod === "card" && {
+          cardLast4: values.cardNumber?.replace(/\s/g, "").slice(-4),
+        }),
       },
     });
 
@@ -238,9 +297,48 @@ export const Checkout: React.FC = () => {
             <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-slate-500">
               Payment method
             </h2>
-            <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-700">
-              Demo payment: Visa ending in 4242 · Secure sandbox checkout
+            <div className="grid gap-3 sm:grid-cols-3">
+              {[
+                { value: "card", label: "Credit or debit card", icon: CreditCard },
+                { value: "paypal", label: "PayPal", icon: Wallet },
+                { value: "cash_on_delivery", label: "Cash on delivery", icon: Banknote },
+              ].map(({ value, label, icon: Icon }) => (
+                <label key={value} className="cursor-pointer">
+                  <input
+                    type="radio"
+                    value={value}
+                    {...register("paymentMethod")}
+                    className="peer sr-only"
+                  />
+                  <span className="flex min-h-20 flex-col justify-center gap-2 rounded-2xl border border-slate-200 bg-white p-3 text-sm font-semibold text-slate-700 transition peer-checked:border-primary-600 peer-checked:bg-primary-50 peer-checked:text-primary-800 peer-focus-visible:ring-2 peer-focus-visible:ring-primary-600">
+                    <Icon className="h-5 w-5" />
+                    {label}
+                  </span>
+                </label>
+              ))}
             </div>
+            {errors.paymentMethod && (
+              <p className="text-xs font-medium text-rose-600">
+                {errors.paymentMethod.message}
+              </p>
+            )}
+            {selectedPaymentMethod === "card" ? (
+              <>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input label="Cardholder name" autoComplete="cc-name" {...register("cardholderName")} error={errors.cardholderName?.message} />
+                  <Input label="Card number" inputMode="numeric" autoComplete="cc-number" {...register("cardNumber")} error={errors.cardNumber?.message} />
+                  <Input label="Expiry (MM/YY)" placeholder="MM/YY" autoComplete="cc-exp" {...register("expiry")} error={errors.expiry?.message} />
+                  <Input label="Security code" inputMode="numeric" autoComplete="cc-csc" {...register("cvv")} error={errors.cvv?.message} />
+                </div>
+                <p className="text-xs text-slate-500">Demo checkout only. Card details are never stored.</p>
+              </>
+            ) : (
+              <p className="text-xs text-slate-500">
+                {selectedPaymentMethod === "paypal"
+                  ? "You will be redirected to PayPal in a real checkout."
+                  : "Pay when your order is delivered."}
+              </p>
+            )}
           </section>
 
           <Button

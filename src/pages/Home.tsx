@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   ShoppingBag,
   ArrowRight,
+  ChevronLeft,
+  ChevronRight,
   Sparkles,
   Truck,
   ShieldCheck,
@@ -41,12 +43,23 @@ const benefits = [
 
 export const Home: React.FC = () => {
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const productsSliderRef = useRef<HTMLDivElement>(null);
+
+  const scrollProducts = (direction: "next" | "previous") => {
+    const slider = productsSliderRef.current;
+    if (!slider) return;
+
+    slider.scrollBy({
+      left: direction === "next" ? slider.clientWidth : -slider.clientWidth,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
         const response = await productService.getProducts({
-          limit: 4,
+          limit: 8,
           sortBy: "featured",
         });
         setFeaturedProducts(response.data);
@@ -187,7 +200,7 @@ export const Home: React.FC = () => {
 
       <section className="bg-slate-100/80 border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-end justify-between gap-4 mb-8">
             <div>
               <h2 className="text-2xl font-bold text-slate-900">
                 Featured picks
@@ -196,11 +209,38 @@ export const Home: React.FC = () => {
                 Selected items our customers keep coming back for
               </p>
             </div>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => scrollProducts("previous")}
+                aria-label="Show previous featured products"
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white text-slate-700 flex items-center justify-center transition hover:border-primary-500 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollProducts("next")}
+                aria-label="Show next featured products"
+                className="w-10 h-10 rounded-full border border-slate-300 bg-white text-slate-700 flex items-center justify-center transition hover:border-primary-500 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div
+            ref={productsSliderRef}
+            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-3 scrollbar-none"
+            aria-label="Featured products carousel"
+          >
             {featuredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <div
+                key={product.id}
+                className="min-w-full sm:min-w-[calc(50%-0.75rem)] lg:min-w-[calc(25%-1.125rem)] snap-start"
+              >
+                <ProductCard product={product} className="h-full" />
+              </div>
             ))}
           </div>
         </div>

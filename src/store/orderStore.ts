@@ -1,6 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Order, OrderStatus, ShippingAddress } from "../types/order";
+import {
+  Order,
+  OrderStatus,
+  PaymentDetails,
+  ShippingAddress,
+} from "../types/order";
 
 interface PlaceOrderInput {
   email: string;
@@ -13,6 +18,7 @@ interface PlaceOrderInput {
     image: string;
   }>;
   shippingAddress: ShippingAddress;
+  payment: PaymentDetails;
 }
 
 interface OrderState {
@@ -25,7 +31,7 @@ export const useOrderStore = create<OrderState>()(
     (set) => ({
       orders: [],
 
-      placeOrder: ({ email, userId, items, shippingAddress }) => {
+      placeOrder: ({ email, userId, items, shippingAddress, payment }) => {
         const subtotal = items.reduce(
           (sum, item) => sum + item.price * item.quantity,
           0,
@@ -52,6 +58,7 @@ export const useOrderStore = create<OrderState>()(
           status: "Processing" as OrderStatus,
           createdAt: new Date().toISOString(),
           shippingAddress,
+          payment,
         };
 
         set((state) => ({ orders: [newOrder, ...state.orders] }));
