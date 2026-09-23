@@ -164,7 +164,23 @@ The build command runs TypeScript checking before generating the Vite production
 
 ## Deployment
 
-ShopSphere can be deployed to any static hosting provider that supports a Vite build, including Vercel, Netlify, GitHub Pages, or Cloudflare Pages.
+ShopSphere can be deployed to any static hosting provider that supports a Vite build, including Vercel, Netlify, GitHub Pages, or Cloudflare Pages. The included `vercel.json` configures the SPA fallback required by React Router.
+
+### Deploy to Vercel
+
+1. Push the project to GitHub.
+2. Sign in to [Vercel](https://vercel.com/) and select **Add New Project**.
+3. Import the ShopSphere GitHub repository.
+4. Keep the detected framework as **Vite**.
+5. Confirm these project settings:
+
+- **Install command:** `npm install`
+- **Build command:** `npm run build`
+- **Output directory:** `dist`
+
+6. Select **Deploy**.
+
+Every new push to the connected production branch will create a new deployment. Vercel preview deployments can be used to review pull requests before merging.
 
 Use the following settings:
 
