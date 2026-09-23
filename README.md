@@ -4,6 +4,12 @@ ShopSphere is a modern e-commerce storefront built with React, TypeScript, Vite,
 
 > ShopSphere is currently a front-end demonstration project. Product data, authentication, cart contents, wishlist items, and orders are stored locally in the browser. No production API, database, or payment gateway is connected.
 
+## Live Demo
+
+[Open the ShopSphere demo on Netlify](https://shopsphere.netlify.app)
+
+If the Netlify site uses a different name, replace the link above with the deployed site URL.
+
 ## Features
 
 ### Customer storefront
@@ -165,6 +171,21 @@ The build command runs TypeScript checking before generating the Vite production
 ## Deployment
 
 ShopSphere can be deployed to any static hosting provider that supports a Vite build, including Vercel, Netlify, GitHub Pages, or Cloudflare Pages. The included `vercel.json` configures the SPA fallback required by React Router.
+
+### Deploy to Netlify
+
+1. Push the project to GitHub.
+2. Sign in to [Netlify](https://www.netlify.com/) and select **Add new site** > **Import an existing project**.
+3. Connect GitHub and select `dev-priyanshuyadav/shopsphere`.
+4. Use these build settings:
+
+- **Build command:** `npm run build`
+- **Publish directory:** `dist`
+- **Base directory:** leave empty
+
+5. Select **Deploy ShopSphere**.
+
+The included `netlify.toml` configures the React Router SPA fallback. After deployment, copy the Netlify site URL into the Live Demo link at the top of this README if it differs from the default URL.
 
 ### Deploy to Vercel
 
