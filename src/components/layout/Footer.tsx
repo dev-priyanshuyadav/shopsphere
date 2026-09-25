@@ -9,6 +9,10 @@ import {
   Mail,
   CheckCircle2,
   ArrowRight,
+  CreditCard,
+  Facebook,
+  Instagram,
+  Twitter,
 } from "lucide-react";
 import { Button } from "../common/Button";
 
@@ -90,12 +94,34 @@ export const Footer: React.FC = () => {
               </span>
             </Link>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              Engineered with modern frontend technologies to deliver a fast,
-              accessible, and delightful shopping experience.
+              Discover everyday essentials, thoughtful gifts, and fresh finds
+              delivered right to your door.
             </p>
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 text-xs text-slate-300 border border-slate-700">
-              <span className="w-2 h-2 rounded-full bg-primary-400" />
-              <span>Built for Frontend Developer Portfolio</span>
+            <div className="flex items-center gap-3 pt-2">
+              <span className="text-xs font-medium text-slate-500">
+                Follow our latest finds
+              </span>
+              <a
+                href="https://www.facebook.com"
+                aria-label="ShopSphere on Facebook"
+                className="p-2 rounded-full bg-slate-800 text-slate-400 hover:bg-primary-600 hover:text-white transition-colors"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.instagram.com"
+                aria-label="ShopSphere on Instagram"
+                className="p-2 rounded-full bg-slate-800 text-slate-400 hover:bg-primary-600 hover:text-white transition-colors"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.twitter.com"
+                aria-label="ShopSphere on Twitter"
+                className="p-2 rounded-full bg-slate-800 text-slate-400 hover:bg-primary-600 hover:text-white transition-colors"
+              >
+                <Twitter className="w-4 h-4" />
+              </a>
             </div>
           </div>
 
@@ -148,7 +174,7 @@ export const Footer: React.FC = () => {
           {/* Customer Service */}
           <div>
             <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              Customer Support
+              Help & Support
             </h4>
             <ul className="space-y-2.5 text-sm">
               <li>
@@ -173,11 +199,19 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/admin"
-                  className="hover:text-primary-400 text-slate-300 font-medium transition-colors"
+                <a
+                  href="mailto:support@shopsphere.com"
+                  className="hover:text-white transition-colors"
                 >
-                  Admin Dashboard
+                  Contact Us
+                </a>
+              </li>
+              <li>
+                <Link
+                  to="/orders"
+                  className="hover:text-white transition-colors"
+                >
+                  Returns & Refunds
                 </Link>
               </li>
             </ul>
@@ -227,13 +261,25 @@ export const Footer: React.FC = () => {
       {/* Bottom Legal bar */}
       <div className="border-t border-slate-800/80 py-6 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <p>
-            © {new Date().getFullYear()} ShopSphere. Demo portfolio project.
-          </p>
-          <p className="text-[11px] text-slate-500">
-            Designed & Developed with React 18, TypeScript, Tailwind CSS, &
-            Zustand.
-          </p>
+          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-x-4 gap-y-2">
+            <p>© {new Date().getFullYear()} ShopSphere.</p>
+            <a
+              href="mailto:support@shopsphere.com"
+              className="hover:text-white transition-colors"
+            >
+              Privacy & Security
+            </a>
+            <a
+              href="mailto:support@shopsphere.com"
+              className="hover:text-white transition-colors"
+            >
+              Terms of Service
+            </a>
+          </div>
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-4 h-4" />
+            <span>Secure payments accepted</span>
+          </div>
         </div>
       </div>
     </footer>
