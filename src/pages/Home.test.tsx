@@ -4,6 +4,32 @@ import { MemoryRouter } from "react-router-dom";
 import { Home } from "./Home";
 
 describe("Home featured products", () => {
+  it("renders a responsive featured-products shelf with product and catalog links", async () => {
+    render(
+      <MemoryRouter>
+        <Home />
+      </MemoryRouter>,
+    );
+
+    const shelf = await screen.findByRole("region", {
+      name: /featured picks/i,
+    });
+
+    expect(
+      within(shelf).getAllByRole("link", { name: /.+/i }).some((link) =>
+        link.getAttribute("href")?.startsWith("/product/"),
+      ),
+    ).toBe(true);
+    expect(
+      screen.getByRole("link", { name: /^shop all$/i }),
+    ).toHaveAttribute("href", "/shop");
+    expect(
+      screen.getByRole("button", {
+        name: /show next featured products/i,
+      }),
+    ).toBeInTheDocument();
+  });
+
   it("links each of the first four featured products to its details page", async () => {
     render(
       <MemoryRouter>

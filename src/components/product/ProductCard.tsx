@@ -123,7 +123,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         {/* Title */}
         <Link
           to={`/product/${product.id}`}
-          className="font-bold text-slate-900 text-sm sm:text-base line-clamp-1 hover:text-primary-600 transition-colors focus-visible:ring-2 focus-visible:ring-primary-500 rounded-sm"
+          className="font-bold text-slate-900 text-sm sm:text-base line-clamp-2 min-h-10 hover:text-primary-600 transition-colors focus-visible:ring-2 focus-visible:ring-primary-500 rounded-sm"
         >
           {product.title}
         </Link>

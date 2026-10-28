@@ -50,7 +50,10 @@ export const Home: React.FC = () => {
     if (!slider) return;
 
     slider.scrollBy({
-      left: direction === "next" ? slider.clientWidth : -slider.clientWidth,
+      left:
+        direction === "next"
+          ? Math.max(slider.clientWidth * 0.8, 280)
+          : -Math.max(slider.clientWidth * 0.8, 280),
       behavior: "smooth",
     });
   };
@@ -199,23 +202,38 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      <section className="bg-slate-100/80 border-y border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 w-full">
-          <div className="flex items-end justify-between gap-4 mb-8">
+      <section className="border-y border-slate-200 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 w-full">
+          <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">
+              <p className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-primary-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-primary-700">
+                <Sparkles className="h-3.5 w-3.5" />
+                ShopSphere finds
+              </p>
+              <h2
+                id="featured-picks-heading"
+                className="text-2xl font-bold text-slate-900 sm:text-3xl"
+              >
                 Featured picks
               </h2>
-              <p className="text-sm text-slate-500 mt-1">
-                Selected items our customers keep coming back for
+              <p className="mt-1 text-sm text-slate-500">
+                Popular finds, handpicked for your next great discovery.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex shrink-0 items-center gap-3">
+              <Link
+                to="/shop"
+                className="hidden items-center gap-1 text-sm font-semibold text-primary-700 transition hover:text-primary-800 sm:inline-flex"
+              >
+                Shop all
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => scrollProducts("previous")}
                 aria-label="Show previous featured products"
-                className="w-10 h-10 rounded-full border border-slate-300 bg-white text-slate-700 flex items-center justify-center transition hover:border-primary-500 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-primary-500 hover:text-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 sm:h-10 sm:w-10"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -223,27 +241,37 @@ export const Home: React.FC = () => {
                 type="button"
                 onClick={() => scrollProducts("next")}
                 aria-label="Show next featured products"
-                className="w-10 h-10 rounded-full border border-slate-300 bg-white text-slate-700 flex items-center justify-center transition hover:border-primary-500 hover:text-primary-600 focus-visible:ring-2 focus-visible:ring-primary-600"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:border-primary-500 hover:text-primary-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 sm:h-10 sm:w-10"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>
+              </div>
             </div>
           </div>
 
           <div
             ref={productsSliderRef}
-            className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-3 scrollbar-none"
-            aria-label="Featured products carousel"
+            className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 scrollbar-none sm:gap-6"
+            role="region"
+            aria-labelledby="featured-picks-heading"
+            tabIndex={0}
           >
             {featuredProducts.map((product) => (
               <div
                 key={product.id}
-                className="min-w-full sm:min-w-[calc(50%-0.75rem)] lg:min-w-[calc(25%-1.125rem)] snap-start"
+                className="min-w-[calc(50%-0.5rem)] snap-start sm:min-w-[calc(50%-0.75rem)] md:min-w-[calc(33.333%-1rem)] lg:min-w-[calc(25%-1.125rem)] xl:min-w-[calc(20%-1.2rem)]"
               >
                 <ProductCard product={product} className="h-full" />
               </div>
             ))}
           </div>
+          <Link
+            to="/shop"
+            className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 transition hover:text-primary-800 sm:hidden"
+          >
+            Shop all featured products
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
