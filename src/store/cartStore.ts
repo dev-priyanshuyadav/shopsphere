@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { Product } from "../types/product";
 import { CartItem } from "../types/cart";
+import { safeStorage } from "../utils/storage";
 
 interface CartState {
   items: CartItem[];
@@ -106,6 +107,7 @@ export const useCartStore = create<CartState>()(
     }),
     {
       name: "shopsphere-cart-storage",
+      storage: createJSONStorage(() => safeStorage),
     },
   ),
 );

@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { Product } from "../types/product";
+import { safeStorage } from "../utils/storage";
 
 interface WishlistState {
   items: Product[];
@@ -55,6 +56,7 @@ export const useWishlistStore = create<WishlistState>()(
     }),
     {
       name: "shopsphere-wishlist-storage",
+      storage: createJSONStorage(() => safeStorage),
     },
   ),
 );

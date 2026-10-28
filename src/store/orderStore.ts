@@ -1,11 +1,12 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import {
   Order,
   OrderStatus,
   PaymentDetails,
   ShippingAddress,
 } from "../types/order";
+import { safeStorage } from "../utils/storage";
 
 interface PlaceOrderInput {
   email: string;
@@ -67,6 +68,7 @@ export const useOrderStore = create<OrderState>()(
     }),
     {
       name: "shopsphere-order-storage",
+      storage: createJSONStorage(() => safeStorage),
     },
   ),
 );

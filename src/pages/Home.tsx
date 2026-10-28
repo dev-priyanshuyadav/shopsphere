@@ -109,9 +109,11 @@ export const Home: React.FC = () => {
 
           <div className="grid grid-cols-2 gap-4">
             {featuredProducts.slice(0, 4).map((product) => (
-              <div
+              <Link
+                to={`/product/${product.id}`}
                 key={product.id}
-                className="bg-white/5 border border-white/10 rounded-2xl p-3 backdrop-blur-sm"
+                aria-label={`View ${product.title} details`}
+                className="bg-white/5 border border-white/10 rounded-2xl p-3 backdrop-blur-sm transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-400"
               >
                 <img
                   src={product.images[0]}
@@ -132,7 +134,7 @@ export const Home: React.FC = () => {
                     {formatCurrency(product.price)}
                   </p>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

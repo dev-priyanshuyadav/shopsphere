@@ -4,6 +4,7 @@ import {
   PaginatedResponse,
   CategoryInfo,
 } from "../types/product";
+import { safeStorage } from "../utils/storage";
 import { ApiError, delay } from "./api";
 
 const DB_KEY = "shopsphere_products_db";
@@ -908,19 +909,27 @@ function createAdditionalProducts(): Product[] {
 // Helper to access persistent store
 const getStoredProducts = (): Product[] => {
   try {
-    if (localStorage.getItem(DB_VERSION_KEY) !== DB_VERSION) {
+    if (safeStorage.getItem(DB_VERSION_KEY) !== DB_VERSION) {
       saveStoredProducts(INITIAL_PRODUCTS);
       return INITIAL_PRODUCTS;
     }
 
-    const data = localStorage.getItem(DB_KEY);
+    const data = safeStorage.getItem(DB_KEY);
     if (!data) {
-      localStorage.setItem(DB_KEY, JSON.stringify(INITIAL_PRODUCTS));
+      safeStorage.setItem(DB_KEY, JSON.stringify(INITIAL_PRODUCTS));
       return INITIAL_PRODUCTS;
     }
-    const products = JSON.parse(data) as Product[];
+
+    const parsed = JSON.parse(data) as unknown;
+    if (!Array.isArray(parsed)) {
+      safeStorage.setItem(DB_KEY, JSON.stringify(INITIAL_PRODUCTS));
+      return INITIAL_PRODUCTS;
+    }
+
+    const products = parsed as Product[];
     const productsWithImages = products.filter((product) =>
-      product.images?.some((image) => image.trim().length > 0),
+      Array.isArray(product.images) &&
+      product.images.some((image) => typeof image === "string" && image.trim().length > 0),
     );
 
     if (productsWithImages.length !== products.length) {
@@ -935,8 +944,8 @@ const getStoredProducts = (): Product[] => {
 
 const saveStoredProducts = (products: Product[]): void => {
   try {
-    localStorage.setItem(DB_KEY, JSON.stringify(products));
-    localStorage.setItem(DB_VERSION_KEY, DB_VERSION);
+    safeStorage.setItem(DB_KEY, JSON.stringify(products));
+    safeStorage.setItem(DB_VERSION_KEY, DB_VERSION);
   } catch (error) {
     console.error("Failed to persist products to localStorage", error);
   }

@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 import { User } from "../types/user";
+import { safeStorage } from "../utils/storage";
 
 interface AuthState {
   user: User | null;
@@ -38,6 +39,7 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "shopsphere-auth-storage",
+      storage: createJSONStorage(() => safeStorage),
     },
   ),
 );
